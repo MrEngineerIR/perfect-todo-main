@@ -10,13 +10,16 @@ const connectDB = async () => {
     return;
   }
   try {
-    await mongoose.connect(process.env.MONGO_URI!, {
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      },
-    });
+    await mongoose.connect(
+      process.env.MONGO_URI! || "mongodb://localhost:27017",
+      {
+        serverApi: {
+          version: ServerApiVersion.v1,
+          strict: true,
+          deprecationErrors: true,
+        },
+      }
+    );
     connected = true;
     // console.log("databasae connected");
   } catch (error) {

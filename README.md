@@ -4,8 +4,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 if you want to test in local mode first make a .env file at the root of this project and in it make MONGO_URI key and set a proper value for it , for example : mongodb://localhost:27017
 
-First, run the development server:
-
+First, install dependencies:
+```bash
+npm install
+```
+then run the development server:
 ```bash
 npm run dev
 # or

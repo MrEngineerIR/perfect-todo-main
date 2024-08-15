@@ -7,7 +7,16 @@ export async function SetUserSession(userId: string) {
   if (session?.name) {
     return false;
   }
-
+  await connectDB();
+  const hasSession = await Session.findOne({ userId: userId });
+  if (hasSession) {
+    cookies().set("auth", `${hasSession.token}`, {
+      httpOnly: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24,
+    });
+    return true;
+  }
   try {
     const hashedId = hashUserInput(userId.toString());
     const token = hashUserInput(hashedId);

@@ -4,6 +4,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 if you want to test in local mode first make a .env file at the root of this project and in it make MONGO_URI key and set a proper value for it , for example : mongodb://localhost:27017
 
+also make sure you have installed Node.js and MongoDB on your computer
+
+then open terminal or integrated console on your IDE and :
+
 First, install dependencies:
 ```bash
 npm install

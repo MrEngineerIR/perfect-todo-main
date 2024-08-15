@@ -4,14 +4,17 @@ import { useRef } from "react";
 import { BsExclamationTriangleFill } from "react-icons/bs";
 import { BoardType } from "./Board";
 import { addNewlines } from "@/utilites/formatText";
+
 export interface RefType {
   showModel: () => void;
   closeModel: () => void;
 }
+
 interface PropType {
   board: BoardType | undefined;
   DialogYesAction: () => void;
 }
+
 const DialogModal = forwardRef<RefType, PropType>((currentBoard, ref) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [isModelOpen, setIsModelOpen] = useState<boolean>(false);

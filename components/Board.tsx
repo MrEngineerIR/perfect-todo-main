@@ -10,11 +10,13 @@ import { RefType } from "./DialogModal";
 import Input from "./Input";
 import { useRouter } from "next/navigation";
 import Category from "./Category";
+
 export type BoardType = {
   _id: string;
   userId: string;
   label: string;
 };
+
 const BoardComponent = () => {
   const BoardContext = useContext(Board_Context);
   const boardDeleteDialogRef = useRef<RefType>(null);

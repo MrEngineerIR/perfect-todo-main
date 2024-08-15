@@ -10,12 +10,14 @@ import { FaPlus, FaTrash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import TextAreaInput from "./TextAreaInput";
 import Task from "./Task";
+
+type category = {
+  _id: string;
+  BoardId: string;
+  label: string;
+};
+
 export default function Category({ boardId }: { boardId: string | undefined }) {
-  type category = {
-    _id: string;
-    BoardId: string;
-    label: string;
-  };
   const [categories, setCategories] = useState<category[]>();
   const [isFormSubmiting, setIsFormSubmiting] = useState<boolean>();
   const rout = useRouter();
@@ -109,19 +111,3 @@ export default function Category({ boardId }: { boardId: string | undefined }) {
     </div>
   );
 }
-//   return (
-//     <Input
-//       hasButton={true}
-//       maxLength={20}
-//       submitFunction={handleCreateBoard}
-//       buttonStyle="flex h-fit dark:hover:bg-gray-900 hover:bg-gray-200 bg-gray-100 dark:bg-gray-800 rounded h-1/4 items-center text-center h-10 w-40 gap-x-1  pl-2"
-//     >
-//       <>
-//         <FaPlus
-//           size={12}
-//           className="light-icon text-black dark:text-white pt-1 h-fit "
-//         />
-//         create category
-//       </>
-//     </Input>
-//   );

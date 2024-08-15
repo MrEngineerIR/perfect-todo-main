@@ -2,13 +2,16 @@ import { cookies } from "next/headers";
 import { hashUserInput } from "./hash";
 import Session from "@/models/Session";
 import connectDB from "@/config/database";
+
 export async function SetUserSession(userId: string) {
   const session = cookies().get("auth");
   if (session?.name) {
     return false;
   }
+
   await connectDB();
   const hasSession = await Session.findOne({ userId: userId });
+
   if (hasSession) {
     cookies().set("auth", `${hasSession.token}`, {
       httpOnly: process.env.NODE_ENV === "production",
@@ -38,6 +41,7 @@ export async function SetUserSession(userId: string) {
     throw new Error(error.message);
   }
 }
+
 export async function validateSession(cookieValue: string, userId: string) {
   await connectDB();
   const session = await Session.findOne({ token: cookieValue });

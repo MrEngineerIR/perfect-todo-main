@@ -6,6 +6,13 @@ import Board from "@/models/Board";
 import BoardComponent from "@/components/Board";
 import Session from "@/models/Session";
 import connectDB from "@/config/database";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Perfect Todo",
+  description: "welcome to the best web todo",
+};
+
 const AccountPage = async () => {
   const session = cookies().get("auth");
   if (!session?.value || !session.name) {

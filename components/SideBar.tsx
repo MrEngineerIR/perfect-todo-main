@@ -1,7 +1,6 @@
 "use client";
-import { KeyboardEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Board_Context } from "@/store/user-context";
-import Input from "@/components/Input";
 import { createBoard } from "@/actions/actions";
 import { useRouter } from "next/navigation";
 import TextAreaInput from "./TextAreaInput";

@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
 import logo from "@/public/todo-icon-2048x2048-pij2pwiy.png";
-import profileDefault from "@/public/vercel.svg";
 import DarkModeToggle from "./DarkModeToggle";
 import { logOut } from "@/actions/actions";
 import { Suspense } from "react";
 import Link from "next/link";
+
 const Navbar = () => {
-  async function handleLogout(params: any) {
+  async function handleLogout() {
     await logOut();
   }
   return (

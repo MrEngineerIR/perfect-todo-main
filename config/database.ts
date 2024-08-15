@@ -1,25 +1,27 @@
+import { ServerApiVersion } from "mongodb";
 import mongoose from "mongoose";
-import { MongoClient } from "mongodb";
 
-const client = new MongoClient(
-  process.env.MONGO_URI || "mongodb://localhost:27017/lucia"
-);
 let connected: boolean = false;
 
 const connectDB = async () => {
   // mongoose.set("strictQuery", true);
   if (connected) {
-    console.log("database already connected");
+    // console.log("database already connected");
     return;
   }
   try {
-    await mongoose.connect(process.env.MONGODB_URI!);
+    await mongoose.connect(process.env.MONGO_URI!, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    });
     connected = true;
-    console.log("databasae connected");
+    // console.log("databasae connected");
   } catch (error) {
-    console.error(error);
+    throw new Error("failed to connect to database");
   }
 };
-const db = client.db();
-export { db };
+
 export default connectDB;

@@ -25,8 +25,8 @@ export async function SetUserSession(userId: string) {
       maxAge: 60 * 60 * 24,
     });
     return true;
-  } catch (error) {
-    return false;
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }
 export async function validateSession(cookieValue: string, userId: string) {

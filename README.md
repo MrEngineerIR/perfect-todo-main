@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+if you want to test in local mode first make a .env file at the root of this project and in it make MONGO_URI key and set a proper value for it , for example : mongodb://localhost:27017
+
 First, run the development server:
 
 ```bash
@@ -29,6 +31,8 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+## If you test on web this application check below link
+[perfect-todo](perfect-todo-main.vercel.app)
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

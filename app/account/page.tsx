@@ -17,9 +17,7 @@ const AccountPage = async () => {
   if (!isValid) {
     redirect("/?mode=signin");
   }
-  if (!user.userId) {
-    redirect("/?mode=signin?res=useridisempty");
-  }
+
   const boards = await Board.find({ userId: user.userId });
   const formatedBoard = [];
   for (const board of boards) {

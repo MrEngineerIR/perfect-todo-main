@@ -5,11 +5,13 @@ import SideBar from "@/components/SideBar";
 import Board from "@/models/Board";
 import BoardComponent from "@/components/Board";
 import Session from "@/models/Session";
+import connectDB from "@/config/database";
 const AccountPage = async () => {
   const session = cookies().get("auth");
   if (!session?.value || !session.name) {
     redirect("/?mode=signin");
   }
+  await connectDB();
   const user = await Session.findOne({ token: session.value });
   const isValid = await validateSession(session.value, user.userId);
   if (!isValid) {

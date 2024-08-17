@@ -7,6 +7,7 @@ import {
   getAllTasks,
 } from "@/actions/actions";
 import { FaPlus, FaTrash } from "react-icons/fa";
+import { SyncLoader } from "react-spinners";
 
 const Task = ({ categoryId }: { categoryId: string }) => {
   type task = {
@@ -89,13 +90,17 @@ const Task = ({ categoryId }: { categoryId: string }) => {
         buttonStyle="flex w-60 hover:bg-gray-300 h-8 ml-4 dark:hover:bg-gray-700 hover:bg-gray-200 bg-gray-200 dark:bg-gray-900 rounded-2xl items-center  gap-x-1  pl-2"
         inputStyle=" resize-none pl-1  overflow-hidden w-full bg-gray-100 dark:bg-gray-800 h-20"
       >
-        <>
-          <FaPlus
-            size={12}
-            className="light-icon text-black dark:text-white  "
-          />
-          Add Task
-        </>
+        {isFormSubmiting ? (
+          <SyncLoader />
+        ) : (
+          <>
+            <FaPlus
+              size={12}
+              className="light-icon text-black dark:text-white  "
+            />
+            Add Task
+          </>
+        )}
       </TextAreaInput>
     </div>
   );

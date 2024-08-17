@@ -10,7 +10,8 @@ import { permanentRedirect, redirect } from "next/navigation";
 import Category from "@/models/Category";
 import Task from "@/models/Task";
 import { ObjectId } from "mongodb";
-import { ok } from "assert";
+import { BoardType } from "@/components/Board";
+import { CategoryType } from "@/components/Category";
 
 type reslut = {
   ok: boolean;
@@ -137,12 +138,26 @@ export async function createBoard(label: string, userId: string) {
 export async function getBoard(id: string) {
   if (ObjectId.isValid(id)) {
     const board = await Board.findById(id);
-    const newboard = {
+    const newboard: BoardType = {
       _id: JSON.parse(JSON.stringify(board._id)),
       userId: board.userId,
       label: board.label,
     };
     return newboard;
+  }
+}
+export async function getBoards(userId: string) {
+  if (ObjectId.isValid(userId)) {
+    const boards = await Board.find({ userId: userId });
+    const formatedBoards: BoardType[] = boards.map((board) => {
+      const newboard: BoardType = {
+        _id: JSON.parse(JSON.stringify(board._id)),
+        userId: board.userId,
+        label: board.label,
+      };
+      return newboard;
+    });
+    return formatedBoards;
   }
 }
 export async function deleteBoard(id: string) {
@@ -177,18 +192,22 @@ export async function editBoard(id: string, label: string) {
 export async function getAllCategory(boardId: string) {
   if (ObjectId.isValid(boardId)) {
     try {
-      const categories = await Category.find({ BoardId: boardId });
-
-      const formatedCategories = [];
-      for (const category of categories) {
-        const newCategory = {
-          _id: JSON.parse(JSON.stringify(category._id)),
-          BoardId: category.BoardId,
-          label: category.label,
-        };
-        formatedCategories.push(newCategory);
+      if (ObjectId.isValid(boardId)) {
+        const categories: CategoryType[] = await Category.find({
+          BoardId: boardId,
+        });
+        const formatedCategories: CategoryType[] = categories.map(
+          (category) => {
+            const newCategory: CategoryType = {
+              _id: JSON.parse(JSON.stringify(category._id)),
+              BoardId: category.BoardId,
+              label: category.label,
+            };
+            return newCategory;
+          }
+        );
+        return formatedCategories;
       }
-      return formatedCategories;
     } catch (error) {
       throw error;
     }

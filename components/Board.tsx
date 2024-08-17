@@ -10,6 +10,8 @@ import { RefType } from "./DialogModal";
 import Input from "./Input";
 import { useRouter } from "next/navigation";
 import Category from "./Category";
+import { revalidatePath } from "next/cache";
+import { SyncLoader } from "react-spinners";
 
 export type BoardType = {
   _id: string;
@@ -36,8 +38,9 @@ const BoardComponent = () => {
     await deleteBoard(currentBoard!._id);
     BoardContext.addBoardId("");
     boardDeleteDialogRef.current?.closeModel();
-    setIsFormSubmiting((prev) => !prev);
     rout.refresh();
+    console.log("is");
+    setIsFormSubmiting((prev) => !prev);
   }
 
   async function handleEditeBoard(data: FormData) {
@@ -48,16 +51,18 @@ const BoardComponent = () => {
       return;
     }
     const res = await editBoard(currentBoard!._id, boardLabel);
+    rout.refresh();
     setCurrentBoard(res);
     setIsFormSubmiting((prev) => !prev);
-    rout.refresh();
   }
 
   return (
-    <div className="">
+    <div>
       <header className="fixed top-20 left-64 flex-row-reverse w-full ml-auto gap-x-4 h-20">
         <nav className="h-full font-bold w-full pl-2 text-3xl dark:bg-gray-800 bg-gray-100 pt-4 justify-start">
-          {currentBoard?._id ? (
+          {isFormSubmiting ? (
+            <SyncLoader />
+          ) : currentBoard?._id ? (
             <Input
               hasButton={true}
               maxLength={73}
@@ -70,6 +75,7 @@ const BoardComponent = () => {
           ) : (
             "First create or select a board"
           )}
+
           <button
             className={`${
               currentBoard?.label ? undefined : "hidden"
@@ -87,7 +93,7 @@ const BoardComponent = () => {
           ref={boardDeleteDialogRef}
         />
       </header>
-      <main className="flex mt-40 ml-64  gap-x-10  ml-2 flex-row">
+      <main className="flex mt-40 ml-80 gap-x-10 flex-row ">
         {currentBoard?._id && <Category boardId={currentBoard?._id} />}
       </main>
     </div>

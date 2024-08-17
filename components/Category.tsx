@@ -5,23 +5,23 @@ import {
   editCategory,
   getAllCategory,
 } from "@/actions/actions";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import TextAreaInput from "./TextAreaInput";
 import Task from "./Task";
+import { SyncLoader } from "react-spinners";
+import { useTheme } from "next-themes";
 
-type category = {
+export type CategoryType = {
   _id: string;
   BoardId: string;
   label: string;
 };
 
 export default function Category({ boardId }: { boardId: string | undefined }) {
-  const [categories, setCategories] = useState<category[]>();
+  const [categories, setCategories] = useState<CategoryType[]>();
   const [isFormSubmiting, setIsFormSubmiting] = useState<boolean>();
-  const rout = useRouter();
-  useLayoutEffect(() => {
+  useEffect(() => {
     async function getCategories() {
       if (boardId) {
         const res = await getAllCategory(boardId);
@@ -40,8 +40,11 @@ export default function Category({ boardId }: { boardId: string | undefined }) {
       return;
     }
     await createCategory(boardId!, categoryLabel as string);
+    const allCategories: CategoryType[] | undefined = await getAllCategory(
+      boardId!
+    );
+    setCategories(allCategories);
     setIsFormSubmiting((prev) => !prev);
-    rout.refresh();
   }
   async function handleEditCategory(categoryId: string, data: FormData) {
     if (isFormSubmiting) return;
@@ -58,10 +61,19 @@ export default function Category({ boardId }: { boardId: string | undefined }) {
     if (isFormSubmiting) return;
     setIsFormSubmiting((prev) => !prev);
     await deleteCategory(categoryId);
+    const allCategories: CategoryType[] | undefined = await getAllCategory(
+      boardId!
+    );
+    setCategories(allCategories);
     setIsFormSubmiting((prev) => !prev);
   }
-  return (
-    <div className="flex gap-x-3 m-20 h-fit">
+
+  return isFormSubmiting ? (
+    <div className="fixed top-1/2 left-1/2">
+      <SyncLoader color={useTheme().theme === "dark" ? "White" : "Black"} />
+    </div>
+  ) : (
+    <div className="flex gap-x-3 m-20 h-fit ">
       {categories?.map((category) => {
         return (
           <div

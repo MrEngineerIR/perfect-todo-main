@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import TextAreaInput from "./TextAreaInput";
 import { SyncLoader } from "react-spinners";
 import { BoardType } from "./Board";
+import { useTheme } from "next-themes";
 
 const SideBar: React.FC<{ boards: any; userId: string }> = ({
   boards,
@@ -42,7 +43,9 @@ const SideBar: React.FC<{ boards: any; userId: string }> = ({
         <div className="flex-col mt-24 ml-4 items-center justify-center gap-y-3">
           <h1 className="font-bold flex mt-2 mb-8 ">Your Boards </h1>
           {isFormSubmiting ? (
-            <SyncLoader />
+            <SyncLoader
+              color={useTheme().theme === "dark" ? "White" : "Black"}
+            />
           ) : (
             <TextAreaInput
               hasButton={true}

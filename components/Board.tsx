@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import Category from "./Category";
 import { revalidatePath } from "next/cache";
 import { SyncLoader } from "react-spinners";
+import { useTheme } from "next-themes";
 
 export type BoardType = {
   _id: string;
@@ -61,7 +62,9 @@ const BoardComponent = () => {
       <header className="fixed top-20 left-64 flex-row-reverse w-full ml-auto gap-x-4 h-20">
         <nav className="h-full font-bold w-full pl-2 text-3xl dark:bg-gray-800 bg-gray-100 pt-4 justify-start">
           {isFormSubmiting ? (
-            <SyncLoader />
+            <SyncLoader
+              color={useTheme().theme === "dark" ? "White" : "Black"}
+            />
           ) : currentBoard?._id ? (
             <Input
               hasButton={true}
